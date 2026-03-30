@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JP Music Intel — Flagrant Artists</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;min-height:100vh}
+.app{max-width:1100px;margin:0 auto;padding:1.5rem 1rem}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e5e3db;flex-wrap:wrap;gap:10px}
+.logo{font-size:17px;font-weight:500;color:#1a1a18}
+.logo span{font-size:11px;font-weight:400;color:#888780;margin-left:8px}
+.tabs{display:flex;gap:3px;background:#f1efe8;padding:3px;border-radius:8px;flex-wrap:wrap}
+.tab{padding:5px 13px;font-size:12px;cursor:pointer;border-radius:6px;border:none;background:transparent;color:#888780;transition:all .15s}
+.tab.on{background:#fff;color:#1a1a18;border:0.5px solid #e5e3db}
+.sec{display:none}.sec.on{display:block}
+.row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.mcard{background:#f1efe8;border-radius:8px;padding:10px 14px;flex:1;min-width:130px}
+.ml{font-size:11px;color:#888780;margin-bottom:3px}
+.mv{font-size:16px;font-weight:500;color:#1a1a18}
+.ms{font-size:10px;color:#888780;margin-top:2px}
+.card{background:#fff;border:0.5px solid #e5e3db;border-radius:12px;padding:14px;margin-bottom:10px}
+.sbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.sbar input,.sbar select{padding:8px 12px;border:0.5px solid #d3d1c7;border-radius:8px;font-size:13px;background:#fff;color:#1a1a18;outline:none}
+.sbar input:focus,.sbar select:focus{border-color:#7f77dd}
+.sbar input{flex:1;min-width:180px}
+.sbar button{padding:8px 16px;font-size:12px;border-radius:8px;border:0.5px solid #d3d1c7;background:#fff;color:#1a1a18;cursor:pointer;white-space:nowrap}
+.sbar button:hover{background:#f1efe8}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;margin-bottom:10px}
+.acard{background:#fff;border:0.5px solid #e5e3db;border-radius:12px;padding:14px;cursor:pointer;transition:border-color .15s}
+.acard:hover{border-color:#b4b2a9}
+.acard.sel{border:1.5px solid #7f77dd}
+.atop{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.an{font-size:14px;font-weight:500;color:#1a1a18}
+.ag{font-size:11px;color:#888780;margin-top:1px}
+.tb{font-size:10px;padding:2px 7px;border-radius:20px;margin-left:auto;flex-shrink:0}
+.t1{background:#EEEDFE;color:#3C3489}
+.t2{background:#E1F5EE;color:#085041}
+.t3{background:#F1EFE8;color:#444441}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px}
+.sstat{text-align:center;padding:6px 2px;background:#f8f7f4;border-radius:6px}
+.sv{font-size:12px;font-weight:500;color:#1a1a18}
+.sl{font-size:10px;color:#888780;margin-top:1px}
+.tag{display:inline-block;font-size:10px;padding:2px 6px;border-radius:12px;background:#f1efe8;color:#5f5e5a;margin:2px 2px 0 0}
+.imp-bar{display:flex;align-items:center;gap:6px;margin-top:8px}
+.imp-label{font-size:11px;color:#888780;width:100px;flex-shrink:0}
+.imp-track{flex:1;height:6px;background:#f1efe8;border-radius:3px;overflow:hidden}
+.imp-fill{height:100%;border-radius:3px}
+.imp-val{font-size:11px;color:#888780;width:28px;text-align:right}
+.detail-panel{background:#fff;border:0.5px solid #e5e3db;border-radius:12px;padding:16px;margin-bottom:12px}
+.dp-top{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap;align-items:flex-start}
+.dp-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;flex-shrink:0}
+.dp-name{font-size:17px;font-weight:500;color:#1a1a18;margin-bottom:2px}
+.dp-sub{font-size:13px;color:#888780}
+.dp-body{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:580px){.dp-body{grid-template-columns:1fr}.conn-grid{grid-template-columns:1fr!important}}
+.dp-stitle{font-size:10px;font-weight:500;color:#888780;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;padding-bottom:4px;border-bottom:0.5px solid #e5e3db}
+.dp-row{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:0.5px solid #f1efe8;font-size:12px;gap:8px}
+.dp-row:last-child{border-bottom:none}
+.dp-key{color:#888780;flex-shrink:0}
+.dp-val{color:#1a1a18;font-weight:500;text-align:right;word-break:break-word}
+.conn-node{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);font-size:12px}
+.conn-node:last-child{border-bottom:none}
+.conn-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.contact-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:12px}
+.cb-green{background:#EAF3DE;color:#27500A}
+.cb-amber{background:#FAEEDA;color:#633806}
+.cb-gray{background:#F1EFE8;color:#444441}
+.cb-blue{background:#E6F1FB;color:#0C447C}
+.ai-resp{font-size:13px;color:#5f5e5a;line-height:1.7;min-height:40px;white-space:pre-wrap}
+.ai-resp.loading{color:#b4b2a9}
+.qbtns{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.qbtn{font-size:11px;padding:4px 10px;border:0.5px solid #d3d1c7;border-radius:20px;background:#fff;color:#888780;cursor:pointer}
+.qbtn:hover{background:#f1efe8;color:#1a1a18}
+.api-note{font-size:11px;color:#888780;padding:8px 12px;background:#f8f7f4;border-radius:8px;margin-bottom:10px;border-left:2px solid #d3d1c7;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hdr">
+    <div class="logo">JP Music Intel <span>Flagrant Artists</span></div>
+    <div class="tabs">
+      <button class="tab on" onclick="sw('search',this)">Artist search</button>
+      <button class="tab" onclick="sw('charts',this)">Size & charts</button>
+      <button class="tab" onclick="sw('connections',this)">Connections</button>
+      <button class="tab" onclick="sw('contacts',this)">Contacts</button>
+      <button class="tab" onclick="sw('ai',this)">AI search</button>
+    </div>
+  </div>
+
+  <div id="search" class="sec on">
+    <div class="sbar">
+      <input type="text" id="sq" placeholder="Search artist, genre, label, tag..." oninput="filterA()">
+      <select id="sf-tier" onchange="filterA()">
+        <option value="">All tiers</option><option value="1">Tier 1</option><option value="2">Tier 2</option><option value="3">Tier 3</option>
+      </select>
+      <select id="sf-collab" onchange="filterA()">
+        <option value="">All viability</option><option value="Target">Target</option><option value="Possible">Possible</option><option value="Stretch">Stretch</option><option value="Unlikely">Unlikely</option>
+      </select>
+    </div>
+    <div id="detail-panel" style="display:none"></div>
+    <div class="agrid" id="agrid"></div>
+  </div>
+
+  <div id="charts" class="sec">
+    <div class="row">
+      <div class="mcard"><div class="ml">Top JP global (Spotify)</div><div class="mv">Joji</div><div class="ms">~29.9M monthly listeners</div></div>
+      <div class="mcard"><div class="ml">Domestic king 2025</div><div class="mv">Mrs. GREEN APPLE</div><div class="ms">3-year streak</div></div>
+      <div class="mcard"><div class="ml">Global #1 JP 2025</div><div class="mv">Ado</div><div class="ms">Dethroned YOASOBI</div></div>
+      <div class="mcard"><div class="ml">Best Taka targets</div><div class="mv">Number_i · BE:FIRST</div><div class="ms">Tier 3 accessible</div></div>
+    </div>
+    <div class="card">
+      <div style="font-size:12px;font-weight:500;color:#888780;margin-bottom:12px">Influence index — combined social + streaming + live (normalised to 100)</div>
+      <div id="influence-bars"></div>
+    </div>
+    <div class="card">
+      <div style="font-size:12px;font-weight:500;color:#888780;margin-bottom:12px">Genre breakdown — Taka collab viability</div>
+      <div id="genre-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px"></div>
+    </div>
+  </div>
+
+  <div id="connections" class="sec">
+    <div style="font-size:12px;color:#888780;margin-bottom:12px;padding:8px 12px;background:#f8f7f4;border-radius:8px">Artist relationship map — label families, collab history, and warm routes relevant to Taka Perry.</div>
+    <div id="conn-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="conn-grid"></div>
+  </div>
+
+  <div id="contacts" class="sec">
+    <div class="sbar">
+      <input type="text" id="cq" placeholder="Search label, artist, or contact..." oninput="filterContacts()">
+      <select id="cf-type" onchange="filterContacts()">
+        <option value="">All types</option><option value="label">Label</option><option value="mgmt">Management</option><option value="agent">Booking agent</option><option value="internal">Tools / research</option>
+      </select>
+    </div>
+    <div id="contact-list"></div>
+  </div>
+
+  <div id="ai" class="sec">
+    <div class="api-note">AI search uses the Anthropic API directly from your browser. Your API key is stored locally in your browser only — never shared. Get a key at console.anthropic.com.</div>
+    <div class="card">
+      <div style="font-size:12px;font-weight:500;color:#888780;margin-bottom:8px">Anthropic API key</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input type="password" id="api-key-input" placeholder="sk-ant-..." style="flex:1;min-width:200px;padding:8px 12px;border:0.5px solid #d3d1c7;border-radius:8px;font-size:13px">
+        <button onclick="saveKey()" style="padding:8px 16px;font-size:12px;border-radius:8px;border:0.5px solid #d3d1c7;background:#fff;cursor:pointer">Save key</button>
+        <span id="key-status" style="font-size:11px;color:#888780;align-self:center"></span>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:12px;color:#888780;margin-bottom:8px">Ask anything about the JP music industry</div>
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+        <input type="text" id="ai-q" placeholder="e.g. How big is SIRUP? Who manages Vaundy?" onkeydown="if(event.key==='Enter')runAI()" style="flex:1;min-width:200px;padding:8px 12px;border:0.5px solid #d3d1c7;border-radius:8px;font-size:13px">
+        <button onclick="runAI()" style="padding:8px 18px;font-size:12px;border-radius:8px;border:0.5px solid #d3d1c7;background:#fff;cursor:pointer">Ask</button>
+      </div>
+      <div class="qbtns">
+        <button class="qbtn" onclick="setQ('How big is SIRUP — Spotify, socials, live scale?')">SIRUP size</button>
+        <button class="qbtn" onclick="setQ('Who manages Number_i and what is their contact info?')">Number_i contacts</button>
+        <button class="qbtn" onclick="setQ('Who is the international booking agent for Creepy Nuts?')">Creepy Nuts agent</button>
+        <button class="qbtn" onclick="setQ('Current Spotify monthly listeners and social following for Vaundy?')">Vaundy socials</button>
+        <button class="qbtn" onclick="setQ('How do I contact Fujii Kaze management for a production collab?')">Fujii Kaze mgmt</button>
+        <button class="qbtn" onclick="setQ('What JP artists have collaborated with international producers recently?')">JP collab history</button>
+        <button class="qbtn" onclick="setQ('Who are A&R contacts at Sony Music Japan and BMSG?')">A&R contacts</button>
+        <button class="qbtn" onclick="setQ('Best route for Taka Perry to approach YOASOBI for a sync licensing deal?')">YOASOBI sync route</button>
+      </div>
+    </div>
+    <div class="card" id="ai-result" style="display:none">
+      <div style="font-size:11px;color:#888780;margin-bottom:8px;font-style:italic" id="ai-ql"></div>
+      <div class="ai-resp" id="ai-resp"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DB=[{id:'joji',name:'Joji',genre:'R&B / Alt-pop',tier:1,av:'JO',bg:'#EEEDFE',tc:'#3C3489',collab:'Unlikely',spotify:'29.9M',instagram:'8.2M',youtube:'5.1M',twitter:'3.4M',tiktok:'12.1M',influence:98,liveScale:'Arena (global)',oricon:'N/A',sales:'Digital-only',label:'88rising / Def Jam',mgmt:'88rising',agent:'CAA (Global)',labelContact:'88rising.com',mgmtContact:'info@88rising.com',agentContact:'caa.com/music',gmailHint:'Search "88rising" or "Joji"',linkedIn:'linkedin.com/company/88rising',connections:['Kenshi Yonezu (shared Asia fanbase)','beabadoobee (collab)','Rich Brian (88rising label)'],tags:['Global #1 JP','R&B','English','88rising'],contactNote:'88rising are approachable via general inquiry. CAA LA handles global touring.'},
+{id:'mga',name:'Mrs. GREEN APPLE',genre:'J-pop / Rock',tier:1,av:'MG',bg:'#E1F5EE',tc:'#085041',collab:'Unlikely',spotify:'7.8M',instagram:'1.9M',youtube:'2.3M',twitter:'1.2M',tiktok:'3.4M',influence:94,liveScale:'Arena (JP)',oricon:'Consistent top 10',sales:'500K+ physical annually',label:'Universal Music Japan',mgmt:'Pony Canyon',agent:'Kyodo Tokyo',labelContact:'umj.co.jp',mgmtContact:'ponycanyon.co.jp',agentContact:'kyodotokyo.com',gmailHint:'Search "Universal Music Japan" or "Mrs. GREEN APPLE"',linkedIn:'linkedin.com/company/universal-music-japan',connections:['Kenshi Yonezu (festival peers)','back number (same era)','Vaundy (label events)'],tags:['Domestic #1','Rock','3yr streak','UMJ'],contactNote:'Universal Music Japan A&R via website. Self-directed band — direct mgmt access limited.'},
+{id:'ky',name:'Kenshi Yonezu',genre:'J-pop / Anime',tier:1,av:'KY',bg:'#EEEDFE',tc:'#3C3489',collab:'Unlikely',spotify:'10.4M',instagram:'2.1M',youtube:'6.8M',twitter:'4.2M',tiktok:'8.9M',influence:95,liveScale:'Arena (JP + Asia)',oricon:'Multiple #1s',sales:'1M+ physical career',label:'Universal Music Japan',mgmt:'Sony Music Artists JP',agent:'Kyodo Tokyo',labelContact:'umj.co.jp',mgmtContact:'sma.co.jp',agentContact:'kyodotokyo.com',gmailHint:'Search "Kenshi Yonezu" or "Universal Music Japan"',linkedIn:'linkedin.com/company/universal-music-japan',connections:['Mrs. GREEN APPLE (shared label)','RADWIMPS (anime peers)','Eve (anime era)'],tags:['Anime','Solo','Global','10M+ Spotify'],contactNote:'Sync licensing via UMJ is the most realistic route. Tsukamoto-san at Victor may have cross-label connections.'},
+{id:'ado',name:'Ado',genre:'J-pop / Anime',tier:1,av:'AD',bg:'#FAECE7',tc:'#712B13',collab:'Unlikely',spotify:'6.8M',instagram:'1.4M',youtube:'3.9M',twitter:'3.1M',tiktok:'7.2M',influence:93,liveScale:'Arena + global tour',oricon:'Multiple #1s',sales:'High digital',label:'Universal Music Japan',mgmt:'Creative Man Productions',agent:'Creative Man',labelContact:'umj.co.jp',mgmtContact:'creativeman.co.jp',agentContact:'creativeman.co.jp',gmailHint:'Search "Creative Man" or "Ado"',linkedIn:'linkedin.com/company/universal-music-japan',connections:['YOASOBI (anime peers)','Kenshi Yonezu (UMJ label mates)','Eve (anime peers)'],tags:['Global #1 2025','Anime','Tour','Identity hidden'],contactNote:'Ado maintains anonymity — Creative Man Productions is the only route. UMJ A&R for sync.'},
+{id:'yoasobi',name:'YOASOBI',genre:'J-pop / Anime',tier:1,av:'YO',bg:'#EEEDFE',tc:'#3C3489',collab:'Unlikely',spotify:'7.4M',instagram:'1.7M',youtube:'4.2M',twitter:'2.8M',tiktok:'6.1M',influence:91,liveScale:'Arena (JP + Asia)',oricon:'Multiple #1s',sales:'Strong digital + physical',label:'Sony Music Entertainment Japan',mgmt:'Sony Music Artists',agent:'Creativeman',labelContact:'sonymusic.co.jp',mgmtContact:'sma.co.jp',agentContact:'creativeman.co.jp',gmailHint:'Search "Sony Music Japan" or "YOASOBI"',linkedIn:'linkedin.com/company/sony-music-entertainment-japan',connections:['Ayase (producer)','ikura (vocalist)','Kenshi Yonezu (anime era)'],tags:['4yr global reign','Anime','Duo','Ikura + Ayase'],contactNote:'Sony Music Artists Japan handles mgmt. Sync licensing via SMEJ A&R recommended for Taka.'},
+{id:'fk',name:'Fujii Kaze',genre:'J-pop / Soul',tier:2,av:'FK',bg:'#E1F5EE',tc:'#085041',collab:'Stretch',spotify:'7.1M',instagram:'2.3M',youtube:'3.1M',twitter:'1.8M',tiktok:'4.5M',influence:87,liveScale:'Arena (JP + Asia)',oricon:'Multiple #1s',sales:'Strong all formats',label:'Universal Music Japan',mgmt:'Hehn Records (self-label)',agent:'Creativeman',labelContact:'umj.co.jp',mgmtContact:'hehn.jp',agentContact:'creativeman.co.jp',gmailHint:'Search "Hehn Records" or "Fujii Kaze"',linkedIn:'linkedin.com/company/universal-music-japan',connections:['Kenshi Yonezu (shared label)','Mrs. GREEN APPLE (same era)','international R&B artists'],tags:['Soul','Global','Viral','Self-label'],contactNote:'hehn.jp has a contact page. Global ambitions make him open to international producers.'},
+{id:'cn',name:'Creepy Nuts',genre:'Hip-hop',tier:2,av:'CN',bg:'#FAEEDA',tc:'#633806',collab:'Possible',spotify:'5.5M',instagram:'1.1M',youtube:'1.8M',twitter:'2.1M',tiktok:'9.3M',influence:82,liveScale:'Hall / arena (JP)',oricon:'Top 10 consistent',sales:'Strong digital',label:'Sony Music Entertainment Japan',mgmt:'Sony Music Artists',agent:'Smash Japan',labelContact:'sonymusic.co.jp',mgmtContact:'sma.co.jp',agentContact:'smash-jpn.com',gmailHint:'Search "Sony Music Japan" or "Smash Japan"',linkedIn:'linkedin.com/company/sony-music-entertainment-japan',connections:['R-shitei (DJ)','Showtime (rapper)','anime sync network'],tags:['Hip-hop','Anime','2yr overseas #1','Rising'],contactNote:'Hip-hop background makes them open to producer collabs. Sony Music Artists is the mgmt contact.'},
+{id:'rw',name:'RADWIMPS',genre:'Rock / Anime',tier:2,av:'RW',bg:'#E1F5EE',tc:'#085041',collab:'Stretch',spotify:'6.85M',instagram:'1.3M',youtube:'2.9M',twitter:'1.5M',tiktok:'3.8M',influence:80,liveScale:'Arena (JP + Asia)',oricon:'Multiple #1s',sales:'1M+ career physical',label:'Universal Music Japan',mgmt:"Toy's Factory",agent:'Kyodo Tokyo',labelContact:'umj.co.jp',mgmtContact:'toysfactory.co.jp',agentContact:'kyodotokyo.com',gmailHint:"Search Toy's Factory or RADWIMPS",linkedIn:'linkedin.com/company/universal-music-japan',connections:['Joe Hisaishi (soundtrack peers)','Kenshi Yonezu (anime era)','Makoto Shinkai (director)'],tags:['Anime','Rock','Your Name','Suzume'],contactNote:"Toy's Factory handles management. Best approached via sync licensing for Taka."},
+{id:'kg',name:'King Gnu',genre:'Art rock',tier:2,av:'KG',bg:'#FAEEDA',tc:'#633806',collab:'Stretch',spotify:'6.76M',instagram:'1.1M',youtube:'2.1M',twitter:'1.4M',tiktok:'4.2M',influence:79,liveScale:'Arena (JP)',oricon:'Multiple #1s',sales:'Strong physical + digital',label:'Ariola Japan (Sony)',mgmt:'Ariola Japan',agent:'Creativeman',labelContact:'ariolajapan.com',mgmtContact:'ariolajapan.com',agentContact:'creativeman.co.jp',gmailHint:'Search "Ariola Japan" or "King Gnu"',linkedIn:'linkedin.com/company/ariola-japan',connections:['millennium parade (Daiki Tsuneta)','Ado (label events)','Vaundy (art-pop peers)'],tags:['Art rock','Domestic','Critical','Self-produced'],contactNote:'Primarily self-produced. Ariola Japan A&R is entry point but expect resistance to external producers.'},
+{id:'ni',name:'Number_i',genre:'J-pop / Hip-hop',tier:3,av:'NI',bg:'#EEEDFE',tc:'#3C3489',collab:'Target',spotify:'1.4M',instagram:'2.8M',youtube:'1.2M',twitter:'3.6M',tiktok:'5.1M',influence:71,liveScale:'Hall / growing arena',oricon:'Top 5 debut',sales:'Strong physical fandom',label:'Avex / TOBE',mgmt:'TOBE Inc',agent:'Kyodo Tokyo',labelContact:'avex.co.jp/contact',mgmtContact:'tobe-official.com',agentContact:'kyodotokyo.com',gmailHint:'Search "TOBE" or "Number_i" or "Avex"',linkedIn:'linkedin.com/company/avex-group',connections:['Former King & Prince members','Johnny alumni','Avex label family'],tags:['Rising','Global debut','Hip-hop','TOBE','Target'],contactNote:'tobe-official.com has a contact form. Most accessible tier 3 hip-hop act. Global ambitions align strongly with Taka.'},
+{id:'xg',name:'XG',genre:'K-JP Pop',tier:3,av:'XG',bg:'#EEEDFE',tc:'#3C3489',collab:'Possible',spotify:'6.18M',instagram:'4.1M',youtube:'3.8M',twitter:'2.1M',tiktok:'8.9M',influence:75,liveScale:'Hall / international',oricon:'Top 10',sales:'Strong global digital',label:'Avex / XGALX',mgmt:'XGALX',agent:'CAA (Global)',labelContact:'avex.co.jp/contact',mgmtContact:'xgalx.com',agentContact:'caa.com/music',gmailHint:'Search "XGALX" or "XG" or "Avex"',linkedIn:'linkedin.com/company/avex-group',connections:['BE:FIRST (Avex family)','K-pop training network','international pop producers'],tags:['Global','Girl group','SE Asia','K-JP','Avex'],contactNote:'xgalx.com for management. Same Avex label family as BE:FIRST — warm intro route via Taka contacts.'},
+{id:'bf',name:'BE:FIRST',genre:'J-pop / Hip-hop',tier:3,av:'BF',bg:'#E1F5EE',tc:'#085041',collab:'Target',spotify:'1.8M',instagram:'1.2M',youtube:'0.9M',twitter:'2.3M',tiktok:'3.1M',influence:68,liveScale:'Hall / growing',oricon:'Top 5 consistent',sales:'Strong physical fandom',label:'BMSG / Avex (B-ME)',mgmt:'BMSG (Sky-Hi)',agent:'Kyodo Tokyo',labelContact:'bmsg.me',mgmtContact:'bmsg.me/contact',agentContact:'kyodotokyo.com',gmailHint:'Search "BMSG" or "BE:FIRST" or "Sky-Hi"',linkedIn:'linkedin.com/company/bmsg',connections:['Sky-Hi (founder/manager)','Number_i (Avex family)','XG (Avex adjacent)'],tags:['Boy group','BMSG','Social #2','Hip-hop','Target'],contactNote:'bmsg.me has a direct business inquiry form. Sky-Hi is accessible and internationally minded. Best single target for Taka.'},
+{id:'vaundy',name:'Vaundy',genre:'J-pop / Pop',tier:3,av:'VA',bg:'#F1EFE8',tc:'#444441',collab:'Possible',spotify:'5.0M',instagram:'0.8M',youtube:'1.6M',twitter:'1.1M',tiktok:'6.2M',influence:73,liveScale:'Hall / arena (JP)',oricon:'Top 5',sales:'Strong digital + physical',label:"Toy's Factory / Sony",mgmt:"Toy's Factory",agent:'Smash Japan',labelContact:'toysfactory.co.jp',mgmtContact:'toysfactory.co.jp',agentContact:'smash-jpn.com',gmailHint:"Search Toy's Factory or Vaundy",linkedIn:"linkedin.com/company/toys-factory",connections:['Mrs. GREEN APPLE (festival peers)','King Gnu (art-pop era)','anime sync network'],tags:['Eclectic','Domestic','Production-fwd','TikTok'],contactNote:"toysfactory.co.jp for management. Sync via A&R is the most realistic route."},
+{id:'lisa',name:'LiSA',genre:'J-rock / Anime',tier:3,av:'LS',bg:'#FAEEDA',tc:'#633806',collab:'Possible',spotify:'3.8M',instagram:'1.8M',youtube:'1.4M',twitter:'2.9M',tiktok:'2.1M',influence:65,liveScale:'Arena (JP + Asia)',oricon:'Multiple #1s',sales:'1M+ physical career',label:'Sacra Music (Sony)',mgmt:'Flying Dog / Sacra',agent:'Creativeman',labelContact:'sacramusic.jp',mgmtContact:'flying-dog.jp',agentContact:'creativeman.co.jp',gmailHint:'Search "Sacra Music" or "LiSA"',linkedIn:'linkedin.com/company/sony-music-entertainment-japan',connections:['Demon Slayer network','Kajiura Yuki (producer)','international anime music community'],tags:['Anime','Rock','Demon Slayer','Felix collab 2025'],contactNote:'Sacra Music A&R is the best entry — sacramusic.jp. Anime sync licensing is a strong angle for Taka.'},
+{id:'yorushika',name:'Yorushika',genre:'J-pop / Indie',tier:3,av:'YR',bg:'#F1EFE8',tc:'#444441',collab:'Possible',spotify:'3.0M',instagram:'0.6M',youtube:'2.1M',twitter:'1.3M',tiktok:'4.8M',influence:62,liveScale:'Hall (JP)',oricon:'Top 10',sales:'Solid digital',label:'Universal Music Japan',mgmt:'UMJ (n-buna directed)',agent:'Creativeman',labelContact:'umj.co.jp',mgmtContact:'umj.co.jp',agentContact:'creativeman.co.jp',gmailHint:'Search "Yorushika" or "Universal Music Japan"',linkedIn:'linkedin.com/company/universal-music-japan',connections:['n-buna (producer)','YOASOBI (indie-digital peers)','anime sync peers'],tags:['Indie','Lyrical','Growing','n-buna'],contactNote:'n-buna self-produces — UMJ A&R is the contact route. Growing international fanbase.'},];
+
+const contacts=[{type:'mgmt',name:'BMSG (BE:FIRST / Sky-Hi)',role:'Management + label — BE:FIRST',direct:'bmsg.me/contact',phone:'—',note:'Most accessible major JP management. Business inquiry form on site. Sky-Hi known for being open to international collaborations.',status:'green'},{type:'mgmt',name:'TOBE Inc (Number_i)',role:'Artist management — Number_i',direct:'tobe-official.com',phone:'—',note:'Number_i independent management company. Contact form on site.',status:'green'},{type:'mgmt',name:'Hehn Records (Fujii Kaze)',role:'Self-label / management',direct:'hehn.jp',phone:'Via website',note:"Fujii Kaze's own label. Contact form on site — more accessible than major label mgmt.",status:'green'},{type:'label',name:'Sony Music Entertainment Japan',role:'Major label — YOASOBI, Creepy Nuts, Ado',direct:'sonymusic.co.jp/contact',phone:'+81-3-5447-8600',note:'Main switchboard. Ask for A&R or artist mgmt dept. Mention specific artist and sync/collab intent.',status:'amber'},{type:'label',name:'Universal Music Japan',role:'Major label — Fujii Kaze, Kenshi Yonezu, RADWIMPS',direct:'umj.co.jp',phone:'+81-3-5962-1100',note:'A&R contact via website. Mention specific artist and sync/collab intent for best response.',status:'amber'},{type:'label',name:'Avex Group',role:'Major label — XG, BE:FIRST adjacent',direct:'avex.co.jp/contact',phone:'+81-3-5765-1100',note:'Avex Entertainment artist services department.',status:'amber'},{type:'label',name:"Toy's Factory",role:'Label/mgmt — Vaundy, RADWIMPS',direct:'toysfactory.co.jp',phone:'+81-3-3405-1361',note:'Independent label with management arm. Direct phone listed on site.',status:'green'},{type:'label',name:'Victor Entertainment',role:'Major label — Taka warm contact (Tsukamoto-san)',direct:'jvcmusic.co.jp',phone:'+81-3-5542-4811',note:'Tsukamoto-san is a direct warm contact. Use this for warm intros to adjacent artists.',status:'green'},{type:'label',name:'Sacra Music (Sony)',role:'Label — LiSA',direct:'sacramusic.jp',phone:'Via Sony Music JP',note:'Sacra Music has a dedicated artist contact page. Sony subsidiary.',status:'amber'},{type:'mgmt',name:'Sony Music Artists Japan',role:'Management — YOASOBI, Creepy Nuts',direct:'sma.co.jp',phone:'+81-3-5485-8600',note:'Separate from label — handles artist management directly.',status:'amber'},{type:'mgmt',name:'Creative Man Productions',role:'Management — Ado, live events',direct:'creativeman.co.jp',phone:'+81-3-3478-5506',note:'Handles both management and live events. Business inquiry via website.',status:'amber'},{type:'agent',name:'CAA (Creative Artists Agency)',role:'Global booking — Joji, XG international',direct:'caa.com/music',phone:'LA: +1-424-288-2000',note:'Tokyo office available. For JP artists touring globally.',status:'amber'},{type:'agent',name:'Kyodo Tokyo',role:'Live/touring — RADWIMPS, Number_i, Kenshi Yonezu',direct:'kyodotokyo.com',phone:'+81-3-5774-0120',note:'Major JP promoter and booking agent.',status:'amber'},{type:'agent',name:'Creativeman Productions',role:'Booking — Fujii Kaze, YOASOBI, LiSA',direct:'creativeman.co.jp',phone:'+81-3-3478-5506',note:'Handles both management and live for several top-tier JP artists.',status:'amber'},{type:'agent',name:'Smash Japan',role:'Booking — Vaundy, Creepy Nuts',direct:'smash-jpn.com',phone:'+81-3-3444-0841',note:'Mid-tier promoter with strong domestic connections.',status:'green'},{type:'internal',name:'Chartmetric',role:'Industry database — artist data + contact discovery',direct:'chartmetric.com',phone:'—',note:'Best tool for finding current management, label, and booking agent contacts. Search any artist profile page.',status:'blue'},{type:'internal',name:'Music Business Japan',role:'Industry news + contact intelligence',direct:'musicbusinessjapan.com',phone:'—',note:'Weekly newsletter covering JP industry moves, label changes, A&R contacts.',status:'blue'},{type:'internal',name:'LinkedIn — JP Music Industry',role:'A&R / management direct outreach',direct:'linkedin.com/search',phone:'—',note:'Search "[Artist] + manager", "[Label] + A&R", "BMSG", "TOBE". Many JP music execs have public profiles.',status:'blue'},];
+
+const genreData=[{genre:'Hip-hop / R&B',viability:'High',reason:"Taka's core style — Number_i, BE:FIRST, Creepy Nuts align",color:'#EAF3DE',tc:'#27500A',artists:['Number_i','BE:FIRST','Creepy Nuts','Joji']},{genre:'J-pop / Anime',viability:'Medium',reason:'Sync licensing angle — strong for anime tie-in potential',color:'#EEEDFE',tc:'#3C3489',artists:['YOASOBI','Ado','Kenshi Yonezu','LiSA']},{genre:'Soul / Electronic',viability:'Medium',reason:'Production alignment — Fujii Kaze / Yorushika producer-forward',color:'#E1F5EE',tc:'#085041',artists:['Fujii Kaze','Yorushika','Hikaru Utada']},{genre:'Rock / Band',viability:'Lower',reason:'Self-producing bands — external producers rarely welcomed',color:'#FAEEDA',tc:'#633806',artists:['Mrs. GREEN APPLE','RADWIMPS','King Gnu']},{genre:'K-JP / Global groups',viability:'Medium',reason:'Open to international producers — XG especially',color:'#EEEDFE',tc:'#3C3489',artists:['XG','LiSA (collab model)']},{genre:'Pop / Eclectic',viability:'Medium',reason:"Vaundy self-directed but Toy's Factory A&R reachable",color:'#F1EFE8',tc:'#444441',artists:['Vaundy','Aimyon']},];
+
+const connGroups=[{title:'BMSG / Avex family',color:'#EEEDFE',tc:'#3C3489',members:[{name:'BE:FIRST',rel:'BMSG managed'},{name:'Number_i',rel:'Avex / TOBE'},{name:'XG',rel:'Avex / XGALX'},{name:'Sky-Hi',rel:'BMSG founder'},{name:'Taka Perry',rel:'Warm route via BMSG inquiry'},]},{title:'Sony Music Japan family',color:'#FAECE7',tc:'#712B13',members:[{name:'YOASOBI',rel:'Sony Music Artists'},{name:'Creepy Nuts',rel:'Sony Music Artists'},{name:'King Gnu',rel:'Ariola Japan'},{name:'LiSA',rel:'Sacra Music'},{name:'Ado',rel:'UMJ / Sony adjacent'},]},{title:'Universal Music Japan family',color:'#E1F5EE',tc:'#085041',members:[{name:'Kenshi Yonezu',rel:'UMJ'},{name:'Mrs. GREEN APPLE',rel:'UMJ'},{name:'Fujii Kaze',rel:'UMJ / Hehn'},{name:'RADWIMPS',rel:'UMJ'},{name:'Yorushika',rel:'UMJ'},]},{title:'Anime sync network',color:'#FAEEDA',tc:'#633806',members:[{name:'YOASOBI',rel:'Oshi no Ko, Frieren'},{name:'Kenshi Yonezu',rel:'Chainsaw Man, Eva'},{name:'Creepy Nuts',rel:'Dandadan, JJK'},{name:'LiSA',rel:'Demon Slayer'},{name:'RADWIMPS',rel:'Your Name, Suzume'},]},{title:"Taka's warm contact network",color:'#EAF3DE',tc:'#27500A',members:[{name:'Victor Entertainment',rel:'Tsukamoto-san (direct)'},{name:'LOAR',rel:'Toss (management)'},{name:'SIRUP team',rel:'Koki (direct)'},{name:'Avex / BMSG',rel:'Via BE:FIRST track reg'},{name:'TV Tokyo Music',rel:'KIRA KIRA agreement'},]},{title:'International collab history (JP)',color:'#F1EFE8',tc:'#444441',members:[{name:'Jonas Blue + BE:FIRST',rel:"Don't Wake Me Up JP ver."},{name:'Megan + Yuki Chiba',rel:'Mamushi'},{name:'LiSA + Felix (SKZ)',rel:'ReawakeR 2025'},{name:'Bruno Mars + Rosé',rel:'APT. crossover'},]},];
+
+let selId=null;
+
+function sw(id,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');el.classList.add('on');}
+
+function filterA(){const q=document.getElementById('sq').value.toLowerCase();const tier=document.getElementById('sf-tier').value;const collab=document.getElementById('sf-collab').value;renderGrid(DB.filter(a=>{const mq=!q||a.name.toLowerCase().includes(q)||a.genre.toLowerCase().includes(q)||a.label.toLowerCase().includes(q)||a.tags.some(t=>t.toLowerCase().includes(q));return mq&&(!tier||String(a.tier)===tier)&&(!collab||a.collab===collab);}));}
+
+function renderGrid(list){document.getElementById('agrid').innerHTML=list.map(a=>`<div class="acard ${selId===a.id?'sel':''}" onclick="showDetail('${a.id}')"><div class="atop"><div class="av" style="background:${a.bg};color:${a.tc}">${a.av}</div><div><div class="an">${a.name}</div><div class="ag">${a.genre}</div></div><span class="tb t${a.tier}">T${a.tier}</span></div><div class="sgrid"><div class="sstat"><div class="sv">${a.spotify}</div><div class="sl">Spotify</div></div><div class="sstat"><div class="sv">${a.instagram}</div><div class="sl">Instagram</div></div><div class="sstat"><div class="sv">${a.youtube}</div><div class="sl">YouTube</div></div><div class="sstat"><div class="sv">${a.tiktok}</div><div class="sl">TikTok</div></div></div><div class="imp-bar"><div class="imp-label">Influence</div><div class="imp-track"><div class="imp-fill" style="width:${a.influence}%;background:${a.tc}"></div></div><div class="imp-val">${a.influence}</div></div><div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px"><div>${a.tags.slice(0,3).map(t=>`<span class="tag">${t}</span>`).join('')}</div><span style="font-size:10px;padding:2px 8px;border-radius:12px;background:${a.collab==='Target'?'#EAF3DE':a.collab==='Possible'?'#EEEDFE':a.collab==='Stretch'?'#FAEEDA':'#F1EFE8'};color:${a.collab==='Target'?'#27500A':a.collab==='Possible'?'#3C3489':a.collab==='Stretch'?'#633806':'#444441'}">${a.collab}</span></div></div>`).join('');}
+
+function showDetail(id){const a=DB.find(x=>x.id===id);selId=id;renderGrid(DB);const p=document.getElementById('detail-panel');p.style.display='block';p.innerHTML=`<div class="detail-panel"><div class="dp-top"><div class="dp-av" style="background:${a.bg};color:${a.tc}">${a.av}</div><div style="flex:1"><div class="dp-name">${a.name} <span class="tb t${a.tier}">Tier ${a.tier}</span></div><div class="dp-sub">${a.genre} &nbsp;·&nbsp; ${a.label}</div><div style="margin-top:6px">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div><button onclick="document.getElementById('detail-panel').style.display='none';selId=null;renderGrid(DB)" style="font-size:11px;padding:4px 10px;border-radius:8px;border:0.5px solid #d3d1c7;background:#fff;cursor:pointer;flex-shrink:0">Close</button></div><div class="dp-body"><div><div class="dp-stitle">Social & streaming</div><div class="dp-row"><div class="dp-key">Spotify monthly</div><div class="dp-val">${a.spotify}</div></div><div class="dp-row"><div class="dp-key">Instagram</div><div class="dp-val">${a.instagram}</div></div><div class="dp-row"><div class="dp-key">YouTube</div><div class="dp-val">${a.youtube}</div></div><div class="dp-row"><div class="dp-key">Twitter / X</div><div class="dp-val">${a.twitter}</div></div><div class="dp-row"><div class="dp-key">TikTok</div><div class="dp-val">${a.tiktok}</div></div><div class="dp-row"><div class="dp-key">Live scale</div><div class="dp-val">${a.liveScale}</div></div><div class="dp-row"><div class="dp-key">Oricon</div><div class="dp-val">${a.oricon}</div></div><div class="dp-row"><div class="dp-key">Sales</div><div class="dp-val">${a.sales}</div></div><div class="dp-row"><div class="dp-key">Influence index</div><div class="dp-val">${a.influence}/100</div></div><div class="dp-row"><div class="dp-key">Taka collab</div><div class="dp-val">${a.collab}</div></div><div style="margin-top:12px"><div class="dp-stitle">Connections</div>${a.connections.map(c=>`<div class="conn-node"><div class="conn-dot" style="background:${a.tc}"></div><span style="font-size:12px;color:#1a1a18">${c}</span></div>`).join('')}</div></div><div><div class="dp-stitle">Contact intelligence</div><div class="dp-row"><div class="dp-key">Label</div><div class="dp-val">${a.label}</div></div><div class="dp-row"><div class="dp-key">Management</div><div class="dp-val">${a.mgmt}</div></div><div class="dp-row"><div class="dp-key">Booking</div><div class="dp-val">${a.agent}</div></div><div class="dp-row"><div class="dp-key">Label web</div><div class="dp-val"><a href="https://${a.labelContact}" target="_blank" style="color:#185FA5">${a.labelContact}</a></div></div><div class="dp-row"><div class="dp-key">Mgmt web</div><div class="dp-val"><a href="https://${a.mgmtContact}" target="_blank" style="color:#185FA5">${a.mgmtContact}</a></div></div><div class="dp-row"><div class="dp-key">Agent web</div><div class="dp-val"><a href="https://${a.agentContact}" target="_blank" style="color:#185FA5">${a.agentContact}</a></div></div><div class="dp-row"><div class="dp-key">Gmail hint</div><div class="dp-val" style="font-style:italic;font-size:11px">${a.gmailHint}</div></div><div style="margin-top:10px;padding:10px;background:#f8f7f4;border-radius:8px"><div style="font-size:10px;font-weight:500;color:#888780;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Contact route</div><div style="font-size:12px;color:#5f5e5a;line-height:1.6">${a.contactNote}</div></div></div></div></div>`;p.scrollIntoView({behavior:'smooth',block:'start'});}
+
+function renderInfluence(){const s=[...DB].sort((a,b)=>b.influence-a.influence).slice(0,12);document.getElementById('influence-bars').innerHTML=s.map(a=>`<div class="imp-bar" style="margin-bottom:6px"><div class="imp-label" style="font-size:11px">${a.name}</div><div class="imp-track"><div class="imp-fill" style="width:${a.influence}%;background:${a.bg==='#F1EFE8'?'#888780':a.tc}"></div></div><div class="imp-val">${a.influence}</div></div>`).join('');}
+
+function renderGenre(){document.getElementById('genre-grid').innerHTML=genreData.map(g=>`<div style="background:${g.color};border-radius:10px;padding:12px"><div style="font-size:12px;font-weight:500;color:${g.tc};margin-bottom:3px">${g.genre}</div><div style="font-size:10px;color:${g.tc};opacity:.8;margin-bottom:5px">${g.reason}</div><div style="font-size:10px;color:${g.tc};margin-bottom:5px">Viability: <strong>${g.viability}</strong></div><div>${g.artists.map(a=>`<span style="font-size:10px;background:rgba(255,255,255,.5);color:${g.tc};padding:1px 6px;border-radius:10px;margin:2px 2px 0 0;display:inline-block">${a}</span>`).join('')}</div></div>`).join('');}
+
+function renderConnections(){document.getElementById('conn-grid').innerHTML=connGroups.map(g=>`<div style="background:${g.color};border-radius:12px;padding:14px"><div style="font-size:12px;font-weight:500;color:${g.tc};margin-bottom:10px;padding-bottom:6px;border-bottom:0.5px solid rgba(0,0,0,.08)">${g.title}</div>${g.members.map(m=>`<div class="conn-node"><div class="conn-dot" style="background:${g.tc}"></div><span style="color:${g.tc};font-weight:500;font-size:12px">${m.name}</span><span style="color:${g.tc};opacity:.7;margin-left:auto;font-size:11px">${m.rel}</span></div>`).join('')}</div>`).join('');}
+
+function renderContacts(list){document.getElementById('contact-list').innerHTML=list.map(c=>`<div class="card"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap"><div style="flex:1"><div style="font-size:13px;font-weight:500;color:#1a1a18">${c.name}</div><div style="font-size:11px;color:#888780;margin-top:1px">${c.role}</div><div style="margin-top:6px">${c.direct?`<div style="font-size:11px;margin-bottom:2px">Web: <a href="https://${c.direct}" target="_blank" style="color:#185FA5">${c.direct}</a></div>`:''} ${c.phone&&c.phone!=='—'?`<div style="font-size:11px;color:#888780">Phone: ${c.phone}</div>`:''}</div><div style="font-size:11px;color:#888780;margin-top:6px;line-height:1.5">${c.note}</div></div><div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0"><span class="contact-badge ${c.status==='green'?'cb-green':c.status==='amber'?'cb-amber':c.status==='blue'?'cb-blue':'cb-gray'}">${c.status==='green'?'Direct access':c.status==='amber'?'Via A&R / form':c.status==='blue'?'Research tool':'Internal'}</span><span class="contact-badge cb-gray">${c.type}</span></div></div></div>`).join('');}
+
+function filterContacts(){const q=document.getElementById('cq').value.toLowerCase();const type=document.getElementById('cf-type').value;renderContacts(contacts.filter(c=>{const mq=!q||c.name.toLowerCase().includes(q)||c.role.toLowerCase().includes(q)||c.note.toLowerCase().includes(q);return mq&&(!type||c.type===type);}));}
+
+function saveKey(){const k=document.getElementById('api-key-input').value.trim();if(k){localStorage.setItem('anth_key',k);document.getElementById('key-status').textContent='Saved';}}
+
+async function runAI(){const q=document.getElementById('ai-q').value.trim();if(!q)return;const key=localStorage.getItem('anth_key');if(!key){document.getElementById('ai-resp').textContent='Add your Anthropic API key above first.';document.getElementById('ai-result').style.display='block';return;}const box=document.getElementById('ai-result');const resp=document.getElementById('ai-resp');box.style.display='block';document.getElementById('ai-ql').textContent=q;resp.textContent='Searching...';resp.className='ai-resp loading';try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:`You are a Japanese music industry expert assistant for Flagrant Artists, an Australian management company managing Tokyo-based producer Taka Perry. When asked about artist size, include: Spotify monthly listeners, Instagram, YouTube, TikTok, Twitter/X followers, live venue scale, Oricon chart history, physical/digital sales. When asked about contacts, provide: label, management, booking agent contacts. If unavailable, suggest: LinkedIn search terms, Chartmetric, Music Business Japan, label switchboard, booking agent routes. Keep responses practical. Daniel's key contacts: Tsukamoto-san (Victor Entertainment), Toss (LOAR), Koki (SIRUP), Tezuka, Jeong.`,messages:[{role:'user',content:q}]})});const data=await res.json();resp.textContent=data.content&&data.content[0]&&data.content[0].text||'No response.';resp.className='ai-resp';}catch(e){resp.textContent='Error: '+e.message;resp.className='ai-resp';}}
+
+function setQ(q){document.getElementById('ai-q').value=q;runAI();}
+
+const sk=localStorage.getItem('anth_key');if(sk){document.getElementById('api-key-input').value=sk;document.getElementById('key-status').textContent='Key loaded';}
+renderGrid(DB);renderInfluence();renderGenre();renderConnections();renderContacts(contacts);
+</script>
+</body>
+</html>
